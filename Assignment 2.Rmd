@@ -1,0 +1,47 @@
+---
+title: "Assignment 2 - SQL and R"
+author: Georgia Galanopoulos
+date: February 12, 2017
+output: html_document
+---
+
+Attempts at reading SQL
+```{r}
+library("DBI")
+library("RMySQL")
+library("RODBC")
+
+#connect = dbConnect(MySQL(), user='galan', host='localhost', dbname='miyamovies')
+
+#connect = odbcConnect("galanopoulog", uid = "galan", pwd = "*******")
+
+#connect = odbcDriverConnect(server= "galanopoulog",
+#                         database="miyamovies",
+#                         trusted_connection= T)
+
+#conn = sqlQuery(connect, "SELECT * FROM dbo.Columns")
+```
+
+
+Create dataframe of six movies reviewed by at least five people whose rating are from 1 to 5. These individuals were unfamiliar with new movies but had watched Miyazaki films. The six filmls were 1. Grave of the Fireflies,2. Howl's Moving Castle, 3. Laputa, 4. Nausicaa, 5. Spirited Away, 6. Totoro and have been abbrieviated for ease.
+```{r}
+Titles = c("1.Grave","2.Howl", "3.Laputa", "4.Nausicaa", "5.Spirit", "6.Totoro")
+Eleni = c(2,5,2,1,4,3) 
+Chris = c(5,2,1,3,4,1)
+Maggie = c(2,5,2,3,5,3)
+Zoe = c(5,5,3,4,4,2)
+Mary = c(4,5,2,4,5,2)
+Nick = c(4,3,1,2,5,1)
+df = data.frame(Eleni, Chris, Maggie, Zoe, Mary, Nick, row.names = Titles)
+knitr::kable(df)
+```
+
+Below is a visual representation of the individuals and their overall ratings of the movies, where the x-axis is the movies and the y-axis is the rating.
+```{r}
+plot.ts(df)
+```
+
+Below is a visual representation of how the movies scored according to the six voters, where the y-axis is the rating and each bar in the histograms is a voter.
+```{r}
+barplot(t(as.matrix(df)), beside=TRUE)
+```
